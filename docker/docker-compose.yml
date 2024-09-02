@@ -87,6 +87,21 @@ services:
       retries: 15
       start_period: 10s
 
+  monkeytype-mongo-express:
+    container_name: monkeytype-mongo-express
+    image: mongo-express:latest
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=monkeytype-mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=pass
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
 volumes:
   mongo-data:
     name: monkeytype_mongo_data

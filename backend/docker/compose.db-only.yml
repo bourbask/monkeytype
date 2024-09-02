@@ -17,6 +17,26 @@ services:
       - "${DOCKER_DB_PORT:-27017}:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: "echo 'db.runCommand({ ping: 1 })' | mongo localhost:27017/test --quiet"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-express:
+    container_name: monkeytype-mongo-express
+    image: mongo-express:latest
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=monkeytype-mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=pass
+    depends_on:
+      mongodb:
+        condition: service_healthy
 
 volumes:
   mongo-data:
