@@ -99,7 +99,7 @@ services:
       - ME_CONFIG_BASICAUTH_USERNAME=admin
       - ME_CONFIG_BASICAUTH_PASSWORD=pass
     depends_on:
-      mongodb:
+      monkeytype-mongodb:
         condition: service_healthy
 
 volumes:
