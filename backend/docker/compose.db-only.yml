@@ -1,5 +1,4 @@
 name: monkeytype
-version: "3.8"
 services:
   redis:
     container_name: monkeytype-redis
